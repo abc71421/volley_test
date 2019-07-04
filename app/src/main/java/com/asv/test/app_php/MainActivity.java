@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
     private final static String mUrl = "http://192.168.1.6:80/AndroidConnectDB/conn.php";
-    private JsonObjectRequest getRequest;
 
     private TextView msg;
     private Button mGetMsgBtn;
@@ -35,9 +34,26 @@ public class MainActivity extends AppCompatActivity {
 
         msg = (TextView) findViewById(R.id.textView);
         mGetMsgBtn = (Button) findViewById(R.id.button);
-
         mQueue = Volley.newRequestQueue(getApplicationContext());
-        getRequest = new JsonObjectRequest(Request.Method.POST, mUrl,null, new Response.Listener<JSONObject>() {
+
+        mGetMsgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                msg.setText("");
+                volley_JsonObjectRequestPOST();
+            }
+        });
+    }
+
+
+    /***
+     * JsonObjectRequest
+     * JsonObjectRequest — To send and receive JSON Object from the Server
+     *
+     * POST方式請求伺服器
+     */
+    private void volley_JsonObjectRequestPOST(){
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, mUrl,null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, "onResponse: " + response.toString());
@@ -60,18 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onErrorResponse: "+error.toString());
             }
         });
-
-
-
-        mGetMsgBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                msg.setText("");
-                mQueue.add(getRequest);
-
-            }
-        });
+        mQueue.add(getRequest);
     }
-
 
 }
