@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">APP_PHP</string>
     <string name="BtnPost">POST</string>
+    <string name="BtnPost_send">SEND</string>
 </resources>
